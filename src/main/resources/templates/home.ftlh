@@ -29,11 +29,18 @@
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
                     <h1 class="fw-light">Hello world</h1>
-                    <p> Это ${title}!</p>
+
+                    <form action="/" method="get">
+                        Поиск по названию объявления: <input type="text" name="title"><br>
+                        <input type="submit" value="Поиск"/>
+                    </form>
+
                     <#list products as product>
                         <div>
                             <p>${product.title} ${product.price} руб. | <a href="/product/${product.id}">Подробнее...</a></p>
                         </div>
+                        <#else>
+                        <h3>Товаров нет</h3>
                     </#list>
                     <hr>
                     <h3> New product </h3>

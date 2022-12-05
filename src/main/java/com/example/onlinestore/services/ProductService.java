@@ -1,39 +1,39 @@
 package com.example.onlinestore.services;
 
 import com.example.onlinestore.models.Product;
+import com.example.onlinestore.repositories.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class ProductService {
-    private List<Product> products = new ArrayList<>();
-    private long ID = 0;
 
-    {
-        products.add(new Product(++ID, "Ring 1", "made of beads", 50, "Rings", "Buy"));
-        products.add(new Product(++ID, "Necklace 1", "made of beads", 500, "Necklaces", "Buy"));
-    }
+    private final ProductRepository productRepository;
+    //private List<Product> products = new ArrayList<>();
 
-    public List<Product> listProducts() {
-        return products;
+    public List<Product> listProducts(String title) {
+        if (title != null) return productRepository.findByTitle(title);
+        return productRepository.findAll();
     }
 
     public void saveProduct(Product product) {
-        product. setId(++ID);
-        products.add(product);
+        log.info("Saving new {}", product);
+        productRepository.save(product);
     }
 
     public void deleteProduct(Long id) {
-        products.removeIf(product -> product.getId().equals(id));
+        productRepository.deleteById(id);
     }
 
     public Product getProductById(Long id) {
-        for (Product product : products) {
-            if (product.getId().equals(id))
-                return product;
-        }
-        return null;
+        return productRepository.findById(id).orElse(null);
     }
 }
