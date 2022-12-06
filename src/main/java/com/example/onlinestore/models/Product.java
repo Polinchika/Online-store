@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -26,6 +29,23 @@ public class Product {
     private String category;
     @Column(name = "instruction")
     private String instruction;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, //Например, при удалении нужно будет удалить ВСЕ фотографии
+                                                                  //При создании товара с фотографиями сохранятся будут не только они, но и все связанные с ним сущности
+    mappedBy = "product") //Типа ссылка на то что товар связанны с фото будет записан в Forreign Key в таблице Image
+    private List<Image> images = new ArrayList<>();
+    private Long previewImageId; //Сразу будем ставить превьюшную фотографию товару
+    private LocalDateTime dateOfCreated;
+
+    @PrePersist
+    private void init(){
+        dateOfCreated = LocalDateTime.now();
+    }
+
+    public void addImageToProduct(Image image) {
+        image.setProduct(this);
+        images.add(image);
+    }
 
     public Product() {
     }
