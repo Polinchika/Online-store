@@ -20,6 +20,7 @@
             <a class="me-3 py-2 text-dark text-decoration-none" href="#">Профиль</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="#">Избранное</a>
             <a class="py-2 text-dark text-decoration-none" href="#">Корзина</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="/login">Войти</a>
         </nav>
     </div>
     </header>
@@ -29,6 +30,11 @@
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
                     <h1 class="fw-light">Hello world</h1>
+
+                    <form action="/logout" method="post">
+                        <input type="hidden" name="_csrf" value="${_csrf.token}">
+                        <input type="submit" value="Выйти"/>
+                    </form>
 
                     <form action="/" method="get">
                         Поиск по названию объявления: <input type="text" name="title"><br>

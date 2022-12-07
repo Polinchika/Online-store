@@ -28,9 +28,8 @@
         <section class="py-5 text-center container">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Hello world</h1>
+                    <h1 class="fw-light">Подробная информация о товаре</h1>
 
-                    <h4>Подробная информация о товаре</h4>
                     <#list images as img>
                         <img src="/images/${img.id}" height="60px"/><br><br>
                     </#list>
