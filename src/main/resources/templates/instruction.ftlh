@@ -28,22 +28,14 @@
         <section class="py-5 text-center container">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Подробная информация о товаре</h1>
+                    <h1 class="fw-light">Инструкция по изготовлению товара ${product.title}</h1>
 
                     <#list images as img>
                         <img src="/images/${img.id}" height="60px"/><br><br>
                     </#list>
-                    <b>Название товара </b>${product.title}<br>
                     <b>Описание товара </b>${product.description}<br>
-                    <b>Цена товара </b>${product.price}<br>
-                    <b>Категория товара </b>${product.category}<br>
                     <b>Инструкция по изготовлению товара </b>${product.instruction}<br>
-                    <hr>
-                    <a href="/product/instruction/${product.id}">Приобрести</a>
-                    <hr>
-                    <form action="/product/delete/${product.id}" method="post">
-                        <input type="submit" value="Удалить товар"/><br><br>
-                    </form>
+
                 </div>
             </div>
         </section>

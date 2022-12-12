@@ -16,11 +16,18 @@
             <span class="fs-4">Handiwork</span>
         </a>
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Главная</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Профиль</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Избранное</a>
-            <a class="py-2 text-dark text-decoration-none" href="#">Корзина</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="/login">Войти</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="/">Главная</a>
+            <#if user.email??>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="#"><i>${user.name}</i></a>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="#">Избранное</a>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="#">Корзина</a>
+                <form action="/logout" method="post">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}">
+                    <input type="submit" value="Выйти"/>
+                </form>
+                <#else>
+                    <a class="py-2 text-dark text-decoration-none" href="/login">Войти</a>
+            </#if>
         </nav>
     </div>
     </header>
@@ -30,11 +37,6 @@
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
                     <h1 class="fw-light">Hello world</h1>
-
-                    <form action="/logout" method="post">
-                        <input type="hidden" name="_csrf" value="${_csrf.token}">
-                        <input type="submit" value="Выйти"/>
-                    </form>
 
                     <form action="/" method="get">
                         Поиск по названию объявления: <input type="text" name="title"><br>
@@ -48,6 +50,7 @@
                         <#else>
                         <h3>Товаров нет</h3>
                     </#list>
+                    <#if user.email??>
                     <hr>
                     <h3> Добавить новый товар </h3>
                     <form action="/product/create" method="post" enctype="multipart/form-data">
@@ -59,8 +62,10 @@
                         Вторая фотография: <input type="file" name="file2"/><br><br>
                         Третья фотография: <input type="file" name="file3"/><br><br>
                         Инструкция: <input type="text" name="instruction"/><br><br>
+                        <input type="hidden" name="_csrf" value="${_csrf.token}">
                         <input type="submit" value="Добавить товар"/><br><br>
                     </form>
+                    </#if>
                                         <p class="lead text-muted">Какой-то текст</p>
                                         <p>
                                             <a href="#" class="btn btn-primary my-2">Первичное действие</a>
