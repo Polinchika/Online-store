@@ -16,10 +16,10 @@
                 <span class="fs-4">Handiwork</span>
             </a>
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                <a class="me-3 py-2 text-dark text-decoration-none" href="#">Главная</a>
-                <#if product.user.email??>
-                    <a class="me-3 py-2 text-dark text-decoration-none" href="/user/${product.user.id}">Профиль</a>
-                    <a class="me-3 py-2 text-dark text-decoration-none" href="#"><i>${product.user.name}</i></a>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="/">Главная</a>
+                <#if user.email??>
+                    <a class="me-3 py-2 text-dark text-decoration-none" href="/user/${user.id}">Профиль</a>
+                    <a class="me-3 py-2 text-dark text-decoration-none" href="#"><i>${user.name}</i></a>
                     <a class="me-3 py-2 text-dark text-decoration-none" href="#">Избранное</a>
                     <a class="me-3 py-2 text-dark text-decoration-none" href="#">Корзина</a>
                     <form action="/logout" method="post">
@@ -32,23 +32,19 @@
             </nav>
         </div>
     </header>
-
-    <main>
-        <section class="py-5 text-center container">
-            <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Инструкция по изготовлению товара ${product.title}</h1>
-
-                    <#list images as img>
-                        <img src="/images/${img.id}" height="60px"/><br><br>
-                    </#list>
-                    <b>Описание товара </b>${product.description}<br>
-                    <b>Инструкция по изготовлению товара </b>${product.instruction}<br>
-
-                </div>
-            </div>
-        </section>
-    </main>
-</div>
+<h3>Подробная информация о пользователе ${user.name}</h3>
+<b>Номер телефона: </b> ${user.phoneNumber}<br>
+<b>Email: </b> ${user.email}<br>
+<h4>Товары пользователя ${user.name}</h4>
+<#list products as product>
+    <div>
+        <p><b>${product.title}</b> ${product.price} руб. | <a href="/product/${product.id}">Подробнее...</a></p>
+    </div>
+<#else>
+    <h3>Товаров нет</h3>
+</#list>
+<#if errorMessage??>
+    <h2 style="color: red">${errorMessage}</h2>
+</#if>
 </body>
 </html>

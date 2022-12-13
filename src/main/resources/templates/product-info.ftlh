@@ -17,9 +17,18 @@
             </a>
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#">Главная</a>
-                <a class="me-3 py-2 text-dark text-decoration-none" href="#">Профиль</a>
-                <a class="me-3 py-2 text-dark text-decoration-none" href="#">Избранное</a>
-                <a class="py-2 text-dark text-decoration-none" href="#">Корзина</a>
+                <#if product.user.email??>
+                    <a class="me-3 py-2 text-dark text-decoration-none" href="/user/${product.user.id}">Профиль</a>
+                    <a class="me-3 py-2 text-dark text-decoration-none" href="#"><i>${product.user.name}</i></a>
+                    <a class="me-3 py-2 text-dark text-decoration-none" href="#">Избранное</a>
+                    <a class="me-3 py-2 text-dark text-decoration-none" href="#">Корзина</a>
+                    <form action="/logout" method="post">
+                        <input type="hidden" name="_csrf" value="${_csrf.token}">
+                        <input type="submit" value="Выйти"/>
+                    </form>
+                <#else>
+                    <a class="py-2 text-dark text-decoration-none" href="/login">Войти</a>
+                </#if>
             </nav>
         </div>
     </header>

@@ -18,6 +18,7 @@
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
             <a class="me-3 py-2 text-dark text-decoration-none" href="/">Главная</a>
             <#if user.email??>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="/user/${user.id}">Профиль</a>
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#"><i>${user.name}</i></a>
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#">Избранное</a>
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#">Корзина</a>
@@ -36,7 +37,10 @@
         <section class="py-5 text-center container">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Hello world</h1>
+
+                        <#if user.isAdmin()>
+                            <h1 class="fw-light"><a href="/admin">Панель администратора</a></h1>
+                        </#if>
 
                     <form action="/" method="get">
                         Поиск по названию объявления: <input type="text" name="title"><br>
