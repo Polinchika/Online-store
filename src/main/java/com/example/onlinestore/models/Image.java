@@ -32,4 +32,6 @@ public class Image {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER) //Подгружаем все фотографии сразу
     private Product product;
 
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private User user;
 }

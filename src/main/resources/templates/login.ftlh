@@ -1,26 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Handiwork</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
-</head>
-<body>
+<#import "templates/blocks.ftlh" as t>
+<@t.template user>
+<main>
+<div class="row py-lg-5">
+<div class="col-lg-6 col-md-8 mx-auto">
 <div class="container">
-    <h4>Авторизация</h4>
-    <form class="form-signin" method="post" action="/login">
-        <h2 class="form-signin-heading">Пожалуйста, войдите в систему</h2>
-            <label for="username" class="sr-only">Электронная почта</label>
-            <input type="email" name="username" class="form-control" placeholder="Username" required="" autofocus="">
-        </p>
-        <p>
-            <label for="password" class="sr-only">Пароль</label>
-            <input type="password" name="password" class="form-control" placeholder="Password" required="">
-        </p>
+    <h1 style="text-align: center">Авторизация</h1>
+    <hr>
+    <form action="/login " method="post">
+        <div class="form-group">
+            <label for="email">Электронная почта</label>
+            <input type="email" class="form-control <#if RequestParameters.error??>is-invalid</#if>" id="email" name="username">
+            <div id="email" class="invalid-feedback">
+                Неверныя электронная почта
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" class="form-control <#if RequestParameters.error??>is-invalid</#if>" id="password" name="password">
+            <div id="password" class="invalid-feedback">
+                Неверный пароль
+            </div>
+        </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <input type="submit" value="Вход"/>
+        <button type="submit" style="width: 100%" class="btn btn-dark">Войти</button>
     </form>
-    <a href="/registration">Зарегистрироваться</a>
+    <hr>
+    <h2>Нет аккаунта? <a href="/registration">Зарегистрируйся!</a></h2>
 </div>
-</body>
-</html>
+</div>
+</div>
+</main>
+</@t.template>

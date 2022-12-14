@@ -35,7 +35,7 @@ public class Product {
     mappedBy = "product") //Типа ссылка на то что товар связанны с фото будет записан в Forreign Key в таблице Image
     private List<Image> images = new ArrayList<>();
     private Long previewImageId; //Сразу будем ставить превьюшную фотографию товару
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY) //При удалении товара, никак не влияем на пользователя
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY) //При удалении товара, никак не влияем на пользователя
     @JoinColumn
     private User user;
     private LocalDateTime dateOfCreated;
