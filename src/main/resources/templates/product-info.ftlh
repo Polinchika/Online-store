@@ -46,12 +46,36 @@
             <p style="text-align: center">${product.description}</p>
             <p style="text-align: center">Товар из категории: ${product.category}</p>
             <hr>
-            <p style="text-align: center">Приобретите инструкцию по выполнению изделия,
+
+            <div class="form-center">
+                <#if user.email??>
+                    <form action="/product/buy/${product.id?c}" method="post">
+                        <input type="hidden" name="_csrf" value="${_csrf.token}">
+                        <input type="submit" class="btn btn-dark" value="Buy">
+                    </form>
+                <#else>
+<#--                    <form action="/" method="get">-->
+<#--                        <input type="hidden" name="_csrf" value="${_csrf.token}">-->
+<#--                        <input type="submit" class="btn btn-dark" value="Buy">-->
+<#--                    </form>-->
+                    <a href="/login" class="btn btn-dark">Buy</a>
+                </#if>
+            </div>
+<#--            <#if user.email??>-->
+<#--                <a href="/like" class="btn btn-sm btn-outline-secondary">Like</a>-->
+<#--                <a href="/buy/${product.id?c}" class="btn btn-sm btn-outline-secondary">Buy</a>-->
+<#--            <#else>-->
+<#--                <a href="/login" class="btn btn-sm btn-outline-secondary">Like</a>-->
+<#--                <a href="/login" class="btn btn-sm btn-outline-secondary">Buy</a>-->
+<#--            </#if>-->
+
+            <hr>
+            <p style="text-align: center">Просмотрите инструкцию по выполнению изделия,
             и вы сможете сделать его сами!</p>
             <p style="text-align: center">
                 <a href="/product/instruction/${product.id}">
                     <img src="/static/images/instr.png" alt="mdo" width="32" height="32"
-                         class="rounded"> Приобрести инструкцию
+                         class="rounded"> Просмотреть инструкцию
                 </a>
             </p>
 <#--            <form action="/product/delete/${product.id?c}" method="post">-->

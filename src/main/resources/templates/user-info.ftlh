@@ -10,9 +10,13 @@
 <#--    <img src="/images/${image.id?c}" height="60ps"/> <br><br>-->
             <br>
             <br>
-            <h2>Имя: ${user.name}</h2>
-            <br>
-            Номер телефона: <b>${user.phoneNumber}</b>
+            <h2>Имя: ${user.name}</h2> <br>
+            <b>Адрес электронной почты: </b> ${user.email} <br>
+            <b>Номер телефона: </b> ${user.phoneNumber} <br>
+<#--            <#if errorMessage??>-->
+<#--                <h2 style="color: red">${errorMessage}</h2>-->
+<#--            </#if>-->
+            <a href="/user/${user.id?c}/update">Редактировать</a>
         </div>
         <br>
         <hr>

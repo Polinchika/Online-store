@@ -39,6 +39,10 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user") //При удалении пользователя удаляем все его товары,
     private List<Product> products = new ArrayList<>();
+
+    @Column(name = "cart")
+    private String cart;
+
     private LocalDateTime dateOfCreated;
 
     @PrePersist

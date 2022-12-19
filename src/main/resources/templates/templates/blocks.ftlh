@@ -26,8 +26,8 @@
                     <#if user.email??>
                         <a class="me-3 py-2 text-dark text-decoration-none" href="/user/${user.id}">Профиль</a>
                         <a class="me-3 py-2 text-dark text-decoration-none" href="#"><i>${user.name}</i></a>
-                        <a class="me-3 py-2 text-dark text-decoration-none" href="#">Избранное</a>
-                        <a class="me-3 py-2 text-dark text-decoration-none" href="#">Корзина</a>
+<#--                        <a class="me-3 py-2 text-dark text-decoration-none" href="/liked">Избранное</a>-->
+                        <a class="me-3 py-2 text-dark text-decoration-none" href="/cart/${user.id}">Корзина</a>
                         <form action="/logout" method="post">
                             <input type="hidden" name="_csrf" value="${_csrf.token}">
                             <input type="submit" value="Выйти"/>

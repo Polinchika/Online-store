@@ -1,6 +1,7 @@
 package com.example.onlinestore.services;
 
 import com.example.onlinestore.models.Image;
+import com.example.onlinestore.models.Product;
 import com.example.onlinestore.models.User;
 import com.example.onlinestore.models.enums.Role;
 import com.example.onlinestore.repositories.ProductRepository;
@@ -31,7 +32,7 @@ public class UserService {
     private final ProductService productService;
     private final PasswordEncoder passwordEncoder;
 
-    public boolean createUser(User user) throws IOException {
+    public boolean createUser(User user, MultipartFile file) throws IOException {
         String email = user.getEmail();
         if (userRepository.findByEmail(user.getEmail()) != null)
             return false;
@@ -39,10 +40,14 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().add(Role.ROLE_USER);
         Image image;
-        MultipartFile file1 = new MockMultipartFile("avatar.png", new FileInputStream(new File("src/main/resources/static/images/avatar.png")));
-        image = productService.toImageEntity(file1);
-        image.setContentType("image/jpeg");
-        image.setOriginalFileName("img.png");
+        if (file != null) {
+            image = toImageEntity(file);
+        } else {
+            MultipartFile file1 = new MockMultipartFile("avatar.png", new FileInputStream(new File("src/main/resources/static/images/avatar.png")));
+            image = productService.toImageEntity(file1);
+            image.setContentType("image/jpeg");
+            image.setOriginalFileName("img.png");
+        }
         user.setAvatar(image);
         log.info("Saving new User with email: {}", email);
         userRepository.save(user);
@@ -85,4 +90,26 @@ public class UserService {
         return userRepository.findByEmail(principal.getName());
     }
 
+    public Image toImageEntity(MultipartFile file) throws IOException {
+        Image image = new Image();
+        image.setName(file.getName());
+        image.setOriginalFileName(file.getOriginalFilename());
+        image.setContentType(file.getContentType());
+        image.setSize(file.getSize());
+        image.setBytes(file.getBytes());
+        return image;
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public void saveUser(List<Product> products, User user) {
+        user.setProducts(products);
+        userRepository.save(user);
+    }
+
+    public List<Product> getProductsByUser(User user, Product product) {
+        return user.getProducts();
+    }
 }
