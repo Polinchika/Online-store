@@ -9,7 +9,7 @@
         Номер телефона: <input type="text" name="phoneNumber" placeholder="${user.phoneNumber}"><br><br>
         Аватар: <img src="/images/${image.id?c}" height="60ps"/> <br><br>
         <input type="file" name="file"/><br><br>
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <input type="submit" value="Изменить профиль"/>
     </form>
 </@t.template>

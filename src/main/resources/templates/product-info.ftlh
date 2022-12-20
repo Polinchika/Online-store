@@ -12,14 +12,13 @@
                 <div class="carousel-inner">
                     <#list images as image>
                         <div class="carousel-item <#if image.previewImage>active</#if>">
-                            <svg class="bd-placeholder-img" width="100%" height="100%"
+                            <svg class="bd-placeholder-img" width="100%" height="300%"
                                  xmlns="http://www.w3.org/2000/svg"
                                  role="img" aria-label=" :  " preserveAspectRatio="xMidYMid slice" focusable="false">
                                 <title></title>
                                 <rect width="100%" height="100%" fill="#777"></rect>
                                 <text x="50%" y="50%" fill="#777" dy=".3em"></text>
                             </svg>
-
                             <div class="container">
                                 <div class="carousel-caption">
                                     <a href="/images/${image.id}">
@@ -41,8 +40,7 @@
                 </a>
             </div>
             <hr>
-            <p>
-            <h1 style="text-align: center">${product.title} | ${product.price} ₽</h1></p>
+            <p><h1 style="text-align: center">${product.title} | ${product.price} ₽</h1></p>
             <p style="text-align: center">${product.description}</p>
             <p style="text-align: center">Товар из категории: ${product.category}</p>
             <hr>
@@ -54,21 +52,9 @@
                         <input type="submit" class="btn btn-dark" value="Buy">
                     </form>
                 <#else>
-<#--                    <form action="/" method="get">-->
-<#--                        <input type="hidden" name="_csrf" value="${_csrf.token}">-->
-<#--                        <input type="submit" class="btn btn-dark" value="Buy">-->
-<#--                    </form>-->
                     <a href="/login" class="btn btn-dark">Buy</a>
                 </#if>
             </div>
-<#--            <#if user.email??>-->
-<#--                <a href="/like" class="btn btn-sm btn-outline-secondary">Like</a>-->
-<#--                <a href="/buy/${product.id?c}" class="btn btn-sm btn-outline-secondary">Buy</a>-->
-<#--            <#else>-->
-<#--                <a href="/login" class="btn btn-sm btn-outline-secondary">Like</a>-->
-<#--                <a href="/login" class="btn btn-sm btn-outline-secondary">Buy</a>-->
-<#--            </#if>-->
-
             <hr>
             <p style="text-align: center">Просмотрите инструкцию по выполнению изделия,
             и вы сможете сделать его сами!</p>
@@ -78,10 +64,6 @@
                          class="rounded"> Просмотреть инструкцию
                 </a>
             </p>
-<#--            <form action="/product/delete/${product.id?c}" method="post">-->
-<#--                <input type="hidden" name="_csrf" value="${_csrf.token}">-->
-<#--                <input type="submit" value="Удалить товар"/><br><br>-->
-<#--            </form>-->
         </section>
     </main>
 </@t.template>

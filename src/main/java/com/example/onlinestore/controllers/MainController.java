@@ -1,5 +1,6 @@
 package com.example.onlinestore.controllers;
 
+import com.example.onlinestore.models.Image;
 import com.example.onlinestore.models.Product;
 import com.example.onlinestore.models.User;
 import com.example.onlinestore.repositories.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,9 +42,16 @@ public class MainController {
     @GetMapping("/product/{id}")
     public String productInfo(@PathVariable Long id, Model model, Principal principal) {
         Product product = productService.getProductById(id);
+        List<Image> images = new ArrayList<>();
+        images.add(0, product.getImages().get(0));
+        if (product.getImages().stream().limit(3).skip(1).findFirst().isPresent()) {
+            images.add(1, product.getImages().get(1));
+        }
+        if (product.getImages().stream().limit(3).skip(2).findFirst().isPresent()){
+            images.add(2, product.getImages().get(2));}
         model.addAttribute("user", productService.getUserByPrincipal(principal));
         model.addAttribute("product", product);
-        model.addAttribute("images", product.getImages());
+        model.addAttribute("images", images);
         model.addAttribute("authorProduct", product.getUser());
         return "product-info";
     }
@@ -51,8 +60,11 @@ public class MainController {
     public String createProduct(@RequestParam("file1") MultipartFile file1,
                                 @RequestParam("file2") MultipartFile file2,
                                 @RequestParam("file3") MultipartFile file3,
-                                Product product, Principal principal) throws IOException {
-        productService.saveProduct(principal, product, file1, file2, file3);
+                                Product product, Principal principal,
+                                @RequestParam("file4") MultipartFile file4,
+                                @RequestParam("file5") MultipartFile file5,
+                                @RequestParam("file6") MultipartFile file6) throws IOException {
+        productService.saveProduct(principal, product, file1, file2, file3, file4, file5, file6);
         return "redirect:/";
     }
 
@@ -65,9 +77,24 @@ public class MainController {
     @GetMapping("/product/instruction/{id}")
     public String productInstruction(@PathVariable Long id, Model model, Principal principal) {
         Product product = productService.getProductById(id);
+        List<Image> imagesInstruction = new ArrayList<>();
+        if (product.getImagesInstruction().stream().limit(6).skip(3).findFirst().isPresent()) {
+            imagesInstruction.add(0, product.getImagesInstruction().get(3));
+        }
+        if (product.getImagesInstruction().stream().limit(6).skip(4).findFirst().isPresent()) {
+            imagesInstruction.add(1, product.getImagesInstruction().get(4));
+        }
+        if (product.getImagesInstruction().stream().limit(6).skip(5).findFirst().isPresent()){
+            imagesInstruction.add(2, product.getImagesInstruction().get(5));
+        }
+        List<Integer> i = new ArrayList<>();
+        i.add(1);
+        i.add(2);
+        i.add(3);
         model.addAttribute("product", product);
-        model.addAttribute("images", product.getImages());
+        model.addAttribute("imagesInstruction", imagesInstruction);
         model.addAttribute("user", productService.getUserByPrincipal(principal));
+        model.addAttribute("i", i);
         return "instruction";
     }
 
@@ -93,5 +120,29 @@ public class MainController {
         model.addAttribute("user", user);
         System.out.println(Arrays.toString(user.getProducts().toArray()));
         return "product-buy";
+    }
+
+    @GetMapping("/product/update/{id}")
+    public String productUpdate(@PathVariable Long id, Model model, Principal principal) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("user", productService.getUserByPrincipal(principal));
+        model.addAttribute("product", product);
+        model.addAttribute("image", product.getImages());
+        return "product-update";
+    }
+
+    @PostMapping("/product/update/{id}")
+    public String productUpdate1(@PathVariable Long id, Principal principal,
+                                 String title, Integer price, String description,
+                                 String instruction, Model model) throws IOException {
+        Product product = productService.getProductById(id);
+        if (title.length() != 0) product.setTitle(title);
+        if (price != null) product.setPrice(price);
+        if (description.length() != 0) product.setDescription(description);
+        if (instruction.length() != 0) product.setInstruction(instruction);
+        User user = productService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
+        productService.saveProduct(principal, product);
+        return "redirect:/product/{id}";
     }
 }

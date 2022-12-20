@@ -47,7 +47,7 @@ public class UserController {
     public String userInfo(@PathVariable("user") User user, Model model, Principal principal) {
         User user1 = userRepository.findByEmail(principal.getName());
         if (user1.getId() != user.getId()) {
-            return "error";
+            return "user-error";
         }
         model.addAttribute("user", user);
         model.addAttribute("products", user.getProducts());
@@ -60,7 +60,7 @@ public class UserController {
     public String userUpdateButton(@PathVariable("user") User user, Model model, Principal principal) {
         User user1 = userRepository.findByEmail(principal.getName());
         if (user1.getId() != user.getId()) {
-            return "error";
+            return "user-error";
         }
         model.addAttribute("user", user);
         model.addAttribute("image", user.getAvatar());
@@ -68,8 +68,8 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}/update")
-    public String updateUser(@PathVariable Long id, @RequestParam("file") MultipartFile file, Model model, String gender,
-                             String name, String phoneNumber, String email) throws IOException {
+    public String updateUser(@PathVariable Long id, @RequestParam("file") MultipartFile file,
+                             String name, String phoneNumber) throws IOException {
         User user = userService.getUserById(id);
         if (name.length() != 0) user.setName(name);
         if (phoneNumber.length() != 0) user.setPhoneNumber(phoneNumber);

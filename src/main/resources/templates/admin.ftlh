@@ -65,9 +65,26 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="description">Инструкция по выполнению товара</label>
-                                <label for="instruction"></label>
+                                <label for="instruction">Инструкция по выполнению товара</label>
                                 <textarea required class="form-control" id="instruction" name="instruction"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input required type="file" name="file4" id="file4">
+                                    <label class="custom-file-label" for="file4">Первая фотография к инструкции</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input required type="file" name="file5" id="file5">
+                                    <label class="custom-file-label" for="file5">Вторая фотография к инструкции</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input required type="file" name="file6" id="file6">
+                                    <label class="custom-file-label" for="file6">Третья фотография к инструкции</label>
+                                </div>
                             </div>
                             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                             <button type="submit" style="width: 100%" class="btn btn-dark">Добавить</button>
@@ -80,13 +97,22 @@
                 <#list products as product>
                     <a href="/product/${product.id}" class="product-link">
                         <div class="card text-white bg-dark my-3 product">
-                            <div class="card-top">
-                                <form action="/product/delete/${product.id}" method="post">
-                                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                                    <button type="submit" class="btn btn-danger m-3">
-                                        Удалить
-                                    </button>
-                                </form>
+                            <div class="row">
+                                <div class="card-top">
+                                    <form action="/product/delete/${product.id}" method="post">
+                                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                                        <button type="submit" class="btn btn-danger m-3">
+                                            Удалить
+                                        </button>
+                                    </form>
+<#--                                    <div class="btn btn-primary m-3"><a href="/product/${product.id}/update">Edit</a></div>-->
+                                    <form action="/product/update/${product.id}" method="get">
+                                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                                        <button type="submit" class="btn btn-primary m-3">
+                                            Редактировать
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                             <img src="/images/${product.previewImageId}"
                                  class="card-img-top">

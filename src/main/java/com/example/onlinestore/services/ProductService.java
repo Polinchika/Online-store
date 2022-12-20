@@ -31,11 +31,15 @@ public class ProductService {
         return productRepository.findByTitle(title);
     }
 
-    public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
+    public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3,
+                            MultipartFile file4, MultipartFile file5, MultipartFile file6) throws IOException {
         product.setUser(getUserByPrincipal(principal));
         Image image1;
         Image image2;
         Image image3;
+        Image image4;
+        Image image5;
+        Image image6;
         if (file1.getSize() != 0) {
             image1 = toImageEntity(file1);
             image1.setPreviewImage(true);
@@ -48,6 +52,18 @@ public class ProductService {
         if (file3.getSize() != 0) {
             image3 = toImageEntity(file3);
             product.addImageToProduct(image3);
+        }
+        if (file4.getSize() != 0) {
+            image4 = toImageEntity(file4);
+            product.addImageToProduct(image4);
+        }
+        if (file5.getSize() != 0) {
+            image5 = toImageEntity(file5);
+            product.addImageToProduct(image5);
+        }
+        if (file6.getSize() != 0) {
+            image6 = toImageEntity(file6);
+            product.addImageToProduct(image6);
         }
         log.info("Saving new Product. Title: {}; Instruction: {}", product.getTitle(), product.getInstruction());
         //Устанавливаем превьюшный id фотографии
@@ -79,4 +95,10 @@ public class ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
+    public void saveProduct(Principal principal, Product product) {
+        product.setUser(getUserByPrincipal(principal));
+        log.info("Saving new Product. Title: {}; Instruction: {}", product.getTitle(), product.getInstruction());
+        //Устанавливаем превьюшный id фотографии
+        productRepository.save(product);
+    }
 }

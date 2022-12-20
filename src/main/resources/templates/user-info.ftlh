@@ -7,7 +7,6 @@
         <div style="text-align: center">
             <img src="/images/${image.id?c}"
                  style="border:2px solid black; border-radius: 20px" height="120">
-<#--    <img src="/images/${image.id?c}" height="60ps"/> <br><br>-->
             <br>
             <br>
             <h2>Имя: ${user.name}</h2> <br>

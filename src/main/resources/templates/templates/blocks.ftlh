@@ -30,7 +30,7 @@
                         <a class="me-3 py-2 text-dark text-decoration-none" href="/cart/${user.id}">Корзина</a>
                         <form action="/logout" method="post">
                             <input type="hidden" name="_csrf" value="${_csrf.token}">
-                            <input type="submit" value="Выйти"/>
+                            <input type="submit" class="btn btn-light" value="Выйти"/>
                         </form>
                     <#else>
                         <a class="py-2 text-dark text-decoration-none" href="/login">Войти</a>

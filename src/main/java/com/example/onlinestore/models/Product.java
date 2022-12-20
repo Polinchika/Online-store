@@ -35,6 +35,9 @@ public class Product {
     mappedBy = "product") //Типа ссылка на то что товар связанны с фото будет записан в Forreign Key в таблице Image
     private List<Image> images = new ArrayList<>();
     private Long previewImageId; //Сразу будем ставить превьюшную фотографию товару
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
+    private List<Image> imagesInstruction = new ArrayList<>();
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY) //При удалении товара, никак не влияем на пользователя
     @JoinColumn
     private User user;
@@ -137,5 +140,9 @@ public class Product {
 
     public String toString() {
         return "Product(title=" + this.getTitle() + ", description=" + this.getDescription() + ", price=" + this.getPrice() + ", category=" + this.getCategory() + ", instruction=" + this.getInstruction() + ")";
+    }
+
+    public Integer countImages(){
+        return images.size();
     }
 }
